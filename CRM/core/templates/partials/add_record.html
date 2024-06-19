@@ -1,0 +1,67 @@
+{% load widget_tweaks %}
+
+<form method="post" action="{% url 'record_add' %}" hx-post="{% url 'record_add' %}" class="my-4 p-4" hx-target="#recordtable" x-data="{ visible: true }"  x-show="visible" hx-swap="outerHTML:beforeend"> 
+    {% csrf_token %}
+    
+    <!-- Name Field -->
+    <div class="form-control mb-4">
+        <label class="input input-bordered flex items-center gap-2" for="{{ form.name.id_for_label }}">
+            <span class="label-text">Name</span>
+            {{ form.name|attr:"class:grow,placeholder:Name,type:text" }}
+        </label>
+        {% if form.name.errors %}
+            <div class="text-red-500 text-xs mt-1">
+                {% for error in form.name.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Email Field -->
+    <div class="form-control mb-4">
+        <label class="input input-bordered flex items-center gap-2" for="{{ form.email.id_for_label }}">
+            <span class="label-text">Email</span>
+            {{ form.email|attr:"class:grow,placeholder:Email,type:email" }}
+        </label>
+        {% if form.email.errors %}
+            <div class="text-red-500 text-xs mt-1">
+                {% for error in form.email.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Phone Number Field -->
+    <div class="form-control mb-4">
+        <label class="input input-bordered flex items-center gap-2" for="{{ form.phone.id_for_label }}">
+            <span class="label-text">Phone Number</span>
+            {{ form.phone|attr:"class:grow,placeholder:Phone Number,type:text" }}
+        </label>
+        {% if form.phone.errors %}
+            <div class="text-red-500 text-xs mt-1">
+                {% for error in form.phone.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Submit Button -->
+    <button class="btn btn-primary" type="submit" @click="visible = false" @click="$event.target.dispatchEvent(new CustomEvent('foo', { open: false }))">Submit</button>
+    <button class="btn btn-primary" type="button" @click="visible = false" @click="$event.target.dispatchEvent(new CustomEvent('foo', { open: false }))">Cancel</button>
+</form>
+
+<!-- Form Error Summary -->
+{% if form.errors %}
+  <div class="text-red-500 mt-4">
+    <ul>
+      {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

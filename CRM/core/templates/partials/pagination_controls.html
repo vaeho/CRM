@@ -1,0 +1,18 @@
+<div class="flex justify-center my-4">
+    {% if page_obj.has_previous %}
+        <button class="btn btn-outline" hx-get="{% url 'index' %}?page={{ page_obj.previous_page_number }}" hx-target="#recordtable">Previous</button>
+    {% endif %}
+    
+    <!-- Page Numbers -->
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+            <span class="mx-2">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <button class="btn btn-outline mx-2" hx-get="{% url 'index' %}?page={{ num }}" hx-target="#recordtable">{{ num }}</button>
+        {% endif %}
+    {% endfor %}
+    
+    {% if page_obj.has_next %}
+        <button class="btn btn-outline" hx-get="{% url 'index' %}?page={{ page_obj.next_page_number }}" hx-target="#recordtable">Next</button>
+    {% endif %}
+</div>

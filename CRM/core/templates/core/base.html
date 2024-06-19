@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="winter">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@^4/dist/full.min.css" rel="stylesheet" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    {% block head %}
+    {% endblock %}
+</head>
+<body>
+    <div class="navbar bg-base-100 text-[#040FE6]" style=" position: sticky; top: 0;">
+        <div class="flex-1">
+            <a class="btn btn-ghost text-xl logo" href="/">CRM</a>
+        </div>
+        <div class="flex-none">
+            <ul class="menu menu-horizontal px-1">
+                <li><a href="/"><b>Home</b></a></li>
+                {% if user.is_authenticated %}
+                <li><strong><a href="{% url 'account_logout' %}">Logout</a></strong></li>
+                {% else %}
+                <li><strong><a href="{% url 'account_login' %}">Login</a></strong></li>
+                <li><strong><a href="{% url 'account_signup' %}">Sign Up</a></strong></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

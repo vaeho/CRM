@@ -1,0 +1,51 @@
+{% extends "core/base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1 class="p-4 text-3xl font-bold"> CRM Home </h1>
+{% if user.is_authenticated %}
+<h2 class="pl-4">{{ user.company }}</h2>
+
+<!-- Add Record Button -->
+<div class="flex p-4">
+    <button class="btn btn-primary" hx-get="{% url 'record_add' %}" hx-target="#form-container" hx-swap="innerHTML">Add Record</button>
+</div>
+<div id="form-container"></div>
+
+<!-- Record Table with Pagination -->
+<div class="overflow-x-auto" id="recordtable" hx-target="this" hx-swap="outerHTML">
+    <table class="table table-pin-rows table-pin-cols">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Last Contacted</th>
+                <th>Created On</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr class="hover">
+                <th>{{ forloop.counter }}</th>
+                <td>{{ record.name }}</td>
+                <td>{{ record.email }}</td>
+                <td>{{ record.phone }}</td>
+                <td>{{ record.last_contacted }}</td>
+                <td>{{ record.created_on }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Include Pagination Controls -->
+    {% include 'partials/pagination_controls.html' %}
+</div>
+
+{% else %}
+<h2 class="p-4">Welcome, Please Authenticate</h2>
+{% endif %}
+{% endblock %}

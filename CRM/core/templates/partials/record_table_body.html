@@ -1,0 +1,25 @@
+<!-- record_table_body.html -->
+<table class="table table-pin-rows table-pin-cols">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Last Contacted</th>
+        <th>Created On</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr class="hover">
+        <th>{{ forloop.counter }}</th>
+        <td>{{ record.name }}</td>
+        <td>{{ record.email }}</td>
+        <td>{{ record.phone }}</td>
+        <td>{{ record.last_contacted }}</td>
+        <td>{{ record.created_on }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
